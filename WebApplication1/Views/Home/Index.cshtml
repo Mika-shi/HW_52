@@ -1,0 +1,11 @@
+﻿@model WebApplication1.ViewModels.PhonesWithOrders
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    @{ await Html.RenderPartialAsync("_GetMessage", new List<string>() { "qwe", "asd", "zxc" }); }
+    <h1 class="display-4">@Model.Phones[0].Name</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>

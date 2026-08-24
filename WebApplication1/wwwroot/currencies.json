@@ -1,0 +1,27 @@
+﻿[
+  {
+    "CurrencyCode": "KGS",
+    "CurrencyName": "Kyrgyz Som",
+    "CurrencyRate": 87
+  },
+  {
+    "CurrencyCode": "RUB",
+    "CurrencyName": "Russian Ruble",
+    "CurrencyRate": 90
+  },
+  {
+    "CurrencyCode": "KZT",
+    "CurrencyName": "Kazakhstani Tenge",
+    "CurrencyRate": 600
+  },
+  {
+    "CurrencyCode": "AED",
+    "CurrencyName": "UAE Dirham",
+    "CurrencyRate": 3.67
+  },
+  {
+    "CurrencyCode": "EUR",
+    "CurrencyName": "Euro",
+    "CurrencyRate": 0.92
+  }
+]
