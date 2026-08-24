@@ -17,6 +17,5 @@ public class Brand
     [Required(ErrorMessage = "Укажите дату основания бренда")]
     [DataType(DataType.Date)]
     public DateTime DateOfFoundation { get; set; }
-
-    public List<Phone> Phones { get; set; } = new List<Phone>();
+    
 }
