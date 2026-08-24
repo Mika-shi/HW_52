@@ -1,24 +1,53 @@
 ﻿@model WebApplication1.Models.Phone
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit Phone";
 }
 
 <h1>Edit Phone</h1>
 
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            @{ await Html.RenderPartialAsync("_MobileForm", Model);}
-        </form>
-    </div>
-</div>
+<form asp-action="Edit" asp-controller="Phone" method="post">
+    <div asp-validation-summary="All" class="alert alert-danger"></div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    <input type="hidden" asp-for="Id" />
+
+    <div>
+        <label asp-for="Name">Name</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Company">Company</label>
+        <input asp-for="Company" class="form-control" />
+        <span asp-validation-for="Company" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Price">Price</label>
+        <input asp-for="Price" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Description">Description</label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="ImageUrl">Image Url</label>
+        <input asp-for="ImageUrl" class="form-control" />
+        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+
+<a asp-action="Index" asp-controller="Phone">Back to list</a>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

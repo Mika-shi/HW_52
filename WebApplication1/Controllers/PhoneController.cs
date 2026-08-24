@@ -47,27 +47,34 @@ public class PhoneController : Controller
         if (id.HasValue)
         {
             Phone? phone = _context.Phones.FirstOrDefault(p => p.Id == id);
+
             if (phone != null)
             {
                 return View(phone);
             }
         }
-        return NotFound();
+
+        TempData["ErrorMessage"] = "Такого телефона не существует";
+        return RedirectToAction("Index");
     }
 
     [HttpPost]
-    public IActionResult Edit(Phone? phone)
+    [ValidateAntiForgeryToken]
+    public IActionResult Edit(Phone phone)
     {
-        if (phone != null)
+        phone.Name = phone.Name?.Trim() ?? "";
+        phone.Company = phone.Company?.Trim() ?? "";
+        phone.Description = phone.Description?.Trim() ?? "";
+        phone.ImageUrl = phone.ImageUrl?.Trim() ?? "";
+
+        if (!ModelState.IsValid)
         {
-           phone.Name = phone.Name?.Trim() ?? "";
-           phone.Company = phone.Company?.Trim() ?? "";
-           phone.Description = phone.Description?.Trim() ?? "";
-           phone.ImageUrl = phone.ImageUrl?.Trim() ?? "";
-            
-            _context.Phones.Update(phone);
-            _context.SaveChanges();
+            return View(phone);
         }
+
+        _context.Phones.Update(phone);
+        _context.SaveChanges();
+
         return RedirectToAction("Index");
     }
 

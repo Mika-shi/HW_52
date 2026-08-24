@@ -21,7 +21,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Views\Brands\" />
+      <Folder Include="Views\Brand\" />
     </ItemGroup>
 
 </Project>

@@ -1,0 +1,41 @@
+@model WebApplication1.Models.Brand
+
+@{
+    ViewData["Title"] = "Edit Brand";
+}
+
+<h1>Edit Brand</h1>
+
+<form asp-action="Edit" asp-controller="Brand" method="post">
+    <div asp-validation-summary="All" class="alert alert-danger"></div>
+
+    <input type="hidden" asp-for="Id" />
+
+    <div>
+        <label asp-for="Name">Brand name</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Email">Email</label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="DateOfFoundation">Date of foundation</label>
+        <input asp-for="DateOfFoundation" type="date" class="form-control" />
+        <span asp-validation-for="DateOfFoundation" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+
+<a asp-controller="Brand" asp-action="Index">Back to brands</a>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
