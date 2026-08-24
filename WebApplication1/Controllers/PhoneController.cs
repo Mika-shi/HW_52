@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication1.Models;
+using WebApplication1.ViewModels;
 
 namespace WebApplication1.Controllers;
 
@@ -110,13 +111,85 @@ public class PhoneController : Controller
         if (id.HasValue)
         {
             Phone? phone = _context.Phones.FirstOrDefault(p => p.Id == id);
+
             if (phone != null)
             {
+                List<Review> reviews = _context.Reviews
+                    .Where(r => r.PhoneId == phone.Id)
+                    .ToList();
+
+                double averageRating = 0;
+
+                if (reviews.Count > 0)
+                {
+                    averageRating = reviews.Average(r => r.Rating);
+                }
+
+                PhoneDetailsViewModel viewModel = new PhoneDetailsViewModel
+                {
+                    Phone = phone,
+                    Reviews = reviews,
+                    AverageRating = averageRating,
+                    NewReview = new Review
+                    {
+                        PhoneId = phone.Id
+                    }
+                };
+
                 ViewBag.Currencies = GetCurrencies();
-                return View(phone);
+
+                return View(viewModel);
             }
         }
-        return NotFound();
+
+        TempData["ErrorMessage"] = "Такого телефона не существует";
+        return RedirectToAction("Index");
+    }
+    
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult AddReview([Bind(Prefix = "NewReview")] Review review)    {
+        Phone? phone = _context.Phones.FirstOrDefault(p => p.Id == review.PhoneId);
+
+        if (phone == null)
+        {
+            TempData["ErrorMessage"] = "Такого телефона нет";
+            return RedirectToAction("Index");
+        }
+
+        review.AuthorName = review.AuthorName?.Trim() ?? "";
+        review.Text = review.Text?.Trim() ?? "";
+
+        if (!ModelState.IsValid)
+        {
+            List<Review> reviews = _context.Reviews
+                .Where(r => r.PhoneId == review.PhoneId)
+                .ToList();
+
+            double averageRating = 0;
+
+            if (reviews.Count > 0)
+            {
+                averageRating = reviews.Average(r => r.Rating);
+            }
+
+            PhoneDetailsViewModel viewModel = new PhoneDetailsViewModel
+            {
+                Phone = phone,
+                Reviews = reviews,
+                AverageRating = averageRating,
+                NewReview = review
+            };
+
+            ViewBag.Currencies = GetCurrencies();
+
+            return View("Details", viewModel);
+        }
+
+        _context.Reviews.Add(review);
+        _context.SaveChanges();
+
+        return RedirectToAction("Details", new { id = review.PhoneId });
     }
 
     private List<CurrencyCourse> GetCurrencies()

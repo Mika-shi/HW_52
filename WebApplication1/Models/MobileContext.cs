@@ -8,5 +8,7 @@ public class MobileContext : DbContext
     public DbSet<Order> Orders { get; set; }
     public DbSet<Brand> Brands { get; set; }
     
+    public DbSet<Review> Reviews { get; set; }
+    
     public MobileContext(DbContextOptions<MobileContext> options) : base(options){}
 }
