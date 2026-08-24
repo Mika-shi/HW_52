@@ -1,0 +1,39 @@
+@model WebApplication1.Models.Brand
+
+@{
+    ViewData["Title"] = "Добавить бренд";
+}
+
+<h2>Добавить бренд</h2>
+
+<form asp-action="Create" asp-controller="Brands" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div>
+        <label asp-for="Name">Название бренда</label>
+        <input asp-for="Name" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Email">Email</label>
+        <input asp-for="Email" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="DateOfFoundation">Дата основания</label>
+        <input asp-for="DateOfFoundation" type="date" />
+        <span asp-validation-for="DateOfFoundation" class="text-danger"></span>
+    </div>
+
+    <button type="submit">Добавить</button>
+</form>
+
+<a asp-controller="Phones" asp-action="Index">Назад к списку телефонов</a>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
